@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <title>CodeMatrix | Hack the Code</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+  <div class="mode-toggle">
+    <button onclick="toggleMode()">Dark/Light</button>
+  </div>
+
+  <h1 class="title">CodeMatrix: Hack the Code</h1>
+  <h2 id="levelTitle">Level 1</h2>
+  <p id="hintArea"></p>
+  <p id="codeDisplay">Şifrəni tap: <span id="codeMask">_ _ _ _</span></p>
+  
+  <input type="text" id="codeInput" maxlength="10" placeholder="Kod daxil et">
+  <button onclick="checkCode()">Təhlil et</button>
+  <button onclick="getHint()">İpucu</button>
+  <button onclick="revealLetter()">CodeMatrix-kömək</button>
+  <p id="result"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>

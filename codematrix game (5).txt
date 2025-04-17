@@ -1,0 +1,69 @@
+const levels = [
+  { answer: "cybr", hint: "kiber təhlükəsizlik" },
+  { answer: "root", hint: "admin icazəsi" },
+  { answer: "dark", hint: "qaranlıq rejim" },
+  { answer: "code", hint: "proqramlaşdırma" },
+  { answer: "mask", hint: "anonimlik simvolu" }
+];
+
+let currentLevel = 0;
+let revealedLetters = [];
+let maxReveal = 2;
+
+function updateUI() {
+  document.getElementById("levelTitle").textContent = "Level " + (currentLevel + 1);
+  let mask = "";
+  let answer = levels[currentLevel].answer;
+  for (let i = 0; i < answer.length; i++) {
+    mask += revealedLetters.includes(i) ? answer[i] + " " : "_ ";
+  }
+  document.getElementById("codeMask").textContent = mask.trim();
+  document.getElementById("codeInput").value = "";
+  document.getElementById("result").textContent = "";
+  document.getElementById("hintArea").textContent = "";
+}
+
+function checkCode() {
+  const input = document.getElementById("codeInput").value.toLowerCase();
+  const correct = levels[currentLevel].answer;
+  if (input === correct) {
+    if (currentLevel < levels.length - 1) {
+      currentLevel++;
+      revealedLetters = [];
+      maxReveal = 2;
+      updateUI();
+    } else {
+      document.getElementById("result").textContent = "Təbriklər! Bütün səviyyələri keçdin!";
+    }
+  } else {
+    document.getElementById("result").textContent = "Xəta! Yenidən cəhd et.";
+  }
+}
+
+function getHint() {
+  document.getElementById("hintArea").textContent = "İpucu: " + levels[currentLevel].hint;
+}
+
+function revealLetter() {
+  const answer = levels[currentLevel].answer;
+  if (revealedLetters.length >= 2) {
+    document.getElementById("result").textContent = "Maksimum 2 hərf göstərə bilərsən.";
+    return;
+  }
+  let unrevealed = [];
+  for (let i = 0; i < answer.length; i++) {
+    if (!revealedLetters.includes(i)) unrevealed.push(i);
+  }
+  if (unrevealed.length > 0) {
+    let randIndex = unrevealed[Math.floor(Math.random() * unrevealed.length)];
+    revealedLetters.push(randIndex);
+    updateUI();
+  }
+}
+
+function toggleMode() {
+  document.body.classList.toggle("light");
+  document.body.classList.toggle("dark");
+}
+
+window.onload = updateUI;
